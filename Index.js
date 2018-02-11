@@ -11,6 +11,8 @@ var aUserKeys = [];
 var gNumTries = 0;
 var gcMaxTries = 10;
 var gWinCtr = 0;
+var objWord;
+var GuessedWord = ""; 
 
 //generate an index no from 1-10
 function GenerateRandomWordIndex()
@@ -20,7 +22,7 @@ function GenerateRandomWordIndex()
     var x = Math.floor((Math.random() * 10) + 1);
    
 	
-	console.log("Inside Function");
+	//console.log("Inside Function");
     return x-1;
 
 }
@@ -29,17 +31,18 @@ function GenerateRandomWordIndex()
 function DetermineWordLength(Pos)
 {
 	var StrWord = cars[Pos];
-	var StrDisplayWord = ""
+	var StrDisplayWord = "";
+	//var GuessWrd = new Word(StrWord);
 	for (var i = 0; i < StrWord.length; i++)
 	{
 		StrDisplayWord += "-";
 		aGuessWord[i] = "-";
-
+		//GuessWrd.AddNewLetter(StrWord.charAt(i));
 	}
 	// Updated Selected Word
 	SelectedWord = cars[Pos];	
 	StrDisplayWord = "GuessWord is: " + StrDisplayWord;
-	console.log(SelectedWord);
+	//console.log(SelectedWord);
 	
 }
 
@@ -47,16 +50,18 @@ function DetermineWordLength(Pos)
 function CheckAlphabetExists(StrSub)
 {
    var n = SelectedWord.indexOf(StrSub);
-   console.log("We are looking for " + StrSub);
+   //console.log("We are looking for " + StrSub);
    for(var i = 0; i < SelectedWord.length; i++)
    {
 		//check if the char matches our value. If so add at that index   	
    		if( SelectedWord.charAt(i) == StrSub)
    		{
-   			console.log("found match")
+   			//console.log("found match")
 			aGuessWord[i] = StrSub;   			
    		}
-   }	
+   }
+   GuessedWord = objWord.CheckGuessLetterExists(StrSub);
+   //console.log("Currently the Guessword is: " + GuessedWord);	
    return n;
 }
 
@@ -65,7 +70,7 @@ function DisplayAllOccurenceofGuessedLetter()
 {
 	var DisplayText = ""
 	var Str = "";
-	console.log("In DisplayAllOccurenceofGuessedLetter")
+	//console.log("In DisplayAllOccurenceofGuessedLetter")
 
 	CheckAlphabetExists(aUserKeys[aUserKeys.length-1]);
 	
@@ -79,8 +84,8 @@ function DisplayAllOccurenceofGuessedLetter()
 	//document.getElementById("guessword").innerHTML = DisplayText;
 
 	//console.log(DisplayText);
-	console.log("Printing Selected Word...");
-	console.log(SelectedWord);
+	//console.log("Printing Selected Word...");
+	//console.log(SelectedWord);
 	str = SelectedWord;
 	str = DisplayText;
 	if(str == SelectedWord)
@@ -120,7 +125,9 @@ function GenerateWord()
 	console.log(LtrCnt);
 	//SelectedWord = cars[LtrCnt];
 	//console.log(cars[LtrCnt]);
-	console.log("Selected word is:" + SelectedWord);			
+	//console.log("Selected word is:" + SelectedWord);
+	//create our Computer Generated Word object
+	objWord = new Word(SelectedWord);
 
 }
 
@@ -128,6 +135,7 @@ function GenerateWord()
 function InitializeGlobals()
 {
 	SelectedWord = "";
+
 	aGuessWord.length = 0;
 	i = 0;
 	aUserKeys.length = 0;
@@ -150,7 +158,7 @@ var ProcessKeys = function()
     var nLives = 0;
     var sLives = "";
     var StrLettersUsed = "";
-    console.log("In Process Keys");
+    //console.log("In Process Keys");
     if(gWinCtr > 0)
     {
     	return;
@@ -164,7 +172,7 @@ var ProcessKeys = function()
     //{	
 	    var RecPrompt = function()
 	    {
-		    console.log("Inside recursion");
+		    //console.log("Inside recursion");
 		    if(gWinCtr > 0)
     		{
     			return;
